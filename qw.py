@@ -52,15 +52,15 @@ pprint(game_stamps)
 def get_score(game_stamps, offset):
     a = len(game_stamps)
     #Переводим в строку
-    b = " ".join(map(str, game_stamps))
+    str1 = " ".join(map(str, game_stamps))
     #Удаляем все знаки
     for p in string.punctuation:
-        if p in b:
-            b = b.replace(p, '')
+        if p in str1:
+            b = str1.replace(p, '')
     #Выводим и сохраняем все числа
-    result = " ".join(re.findall("\d+", b))
+    result = " ".join(re.findall("\d+", str1))
     #Создаём список
-    asd = [int(x) for x in result.split()]
+    spisok = [int(x) for x in result.split()]
     
     #Переменные 
     offset2 = []
@@ -72,13 +72,13 @@ def get_score(game_stamps, offset):
     TR_FL = True
     END = "END"
     for i in range(a):
-        offset2.append(asd[offset3])
+        offset2.append(spisok[offset3])
         offset3 += 3
 
-        home.append(asd[home1])
+        home.append(spisok[home1])
         home1 += 3
         
-        away.append(asd[away1])
+        away.append(spisok[away1])
         away1 += 3
         
     #Поиск и Вывод (Условия) 
@@ -103,7 +103,6 @@ def get_score(game_stamps, offset):
     return END
 score = get_score(game_stamps, offset)
 pprint(score)
-
 
 
 
