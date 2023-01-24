@@ -31,18 +31,13 @@ def generate_stamp(previous_value):
             "away": previous_value["score"]["away"] + away_score_change
         }
     }
-hom = []
-awa = []
-offse = []
+
 def generate_game():
     stamps = [INITIAL_STAMP, ]
     current_stamp = INITIAL_STAMP
     for _ in range(TIMESTAMPS_COUNT):
         current_stamp = generate_stamp(current_stamp)
         stamps.append(current_stamp)
-        hom.append(current_stamp["score"]["home"])
-        awa.append(current_stamp["score"]["away"])
-        offse.append(current_stamp["offset"])
     return stamps
 game_stamps = generate_game()
 pprint(game_stamps)
@@ -50,25 +45,19 @@ pprint(game_stamps)
 offset = int(input())
 
 def get_score(game_stamps,offset):
-    r = True
-    away = 0
-    home = 0
-    offset1 = offset
-    if offset1 > 50000:
-        offset1 = 49999
-    if offset > offse[-1]:
-        offset = offse[-1]
-    while r:
-        if offset <= 0:
-            r = False
-        elif offse[offset1] > offset:
-            offset1 -= 1
-        elif offse[offset1] <= offset:
-            home = hom[offset1]
-            away = awa[offset1]
-            r = False
-    return home, away
+    list_length = len(game_stamps)
+    if offset > list_length:
+        search_num = list_length - 1
+    else:
+        search_num = offset
+    for i in range(search_num):
+        if game_stamps[search_num]["offset"] > offset:
+            search_num -= 1
+            if game_stamps[search_num]["offset"] <= offset:
+                break
+    return game_stamps[search_num]["score"]
 pprint(get_score(game_stamps,offset))
+
 
 
 
